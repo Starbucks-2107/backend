@@ -1,4 +1,4 @@
-package com.starbucks.backend.global.util;
+package com.starbucks.backend.global.jwt.util;
 
 import com.starbucks.backend.domain.user.entity.User;
 import com.starbucks.backend.domain.user.repository.UserRepository;

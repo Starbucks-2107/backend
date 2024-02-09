@@ -1,4 +1,4 @@
-package com.starbucks.backend.global.util;
+package com.starbucks.backend.global.jwt.util;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

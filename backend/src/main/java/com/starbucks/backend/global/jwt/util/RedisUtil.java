@@ -1,4 +1,4 @@
-package com.starbucks.backend.global.util;
+package com.starbucks.backend.global.jwt.util;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
