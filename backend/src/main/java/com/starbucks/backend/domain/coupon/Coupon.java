@@ -1,6 +1,5 @@
 package com.starbucks.backend.domain.coupon;
 
-import com.starbucks.backend.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
