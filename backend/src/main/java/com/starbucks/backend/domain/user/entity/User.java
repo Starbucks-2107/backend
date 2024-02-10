@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class User {
     @Id
@@ -23,6 +27,14 @@ public class User {
 
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$")
     private String password;
+
+    @NotNull
+    @Column(unique = true)
+    private String username;
+
+    @NotNull
+    @Column(length = 11, unique = true)
+    private String phoneNumber;
 
     @NotNull
     @Pattern(regexp = "^[가-힣]+$")
