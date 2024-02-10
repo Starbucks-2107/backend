@@ -25,7 +25,6 @@ public class User {
     @Email
     private String email;
 
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$")
     private String password;
 
     @NotNull
