@@ -2,9 +2,7 @@ package com.starbucks.backend.global.jwt.util;
 
 import com.starbucks.backend.domain.user.entity.User;
 import com.starbucks.backend.domain.user.repository.UserRepository;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -63,13 +61,6 @@ public class TokenUtil implements InitializingBean {
         return "Bearer " + accessToken;
     }
 
-    public String refreshAccessToken(String refreshToken) {
-        String userId = getUserIdFromToken(refreshToken).toString();
-        String accessToken = generateAccessToken(userId);
-        return accessToken;
-    }
-
-
     // refreshToken -------------------------------------------------
     public String generateRefreshToken(String userId) {
         if (key == null) {
@@ -91,23 +82,19 @@ public class TokenUtil implements InitializingBean {
 
     // common method -------------------------------------------------
     // Token Verification.
-    public boolean isValidAccessToken(String token) {
+    public void validateAccessToken(String token) throws ExpiredJwtException {
         token = token.substring(7);
-        Jws<Claims> claims = Jwts.parserBuilder()
+
+        Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token);
-
-        boolean isValid = claims.getBody()
-                .getExpiration()
-                .after(new Date());
-
-        return isValid;
     }
 
     // Get authentication using Token.
     public void getAuthenticationUsingToken(String accessToken) {
         accessToken = accessToken.substring(7);
+
         Long userId = getUserIdFromToken(accessToken);
         User user = userRepository.findById(userId).get();
 
@@ -129,6 +116,7 @@ public class TokenUtil implements InitializingBean {
         if (!accessTokenFromHeader.isEmpty()) {
             return accessTokenFromHeader;
         }
+
         return null;
     }
 
