@@ -16,6 +16,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    asciidoctorExt
 }
 
 repositories {
@@ -46,30 +47,15 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.mockito:mockito-core:4.8.0'
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+test {
     outputs.dir snippetsDir
 }
 
 asciidoctor {
-    configurations 'asciidoctorExt'
-    baseDirFollowsSourceFile()
     inputs.dir snippetsDir
+    configurations 'asciidoctorExt'
     dependsOn test
-}
-
-asciidoctor.doFirst {
-    delete file('src/main/resources/static/docs')
-}
-
-tasks.register('copyDocument', Copy) {
-    dependsOn asciidoctor
-    from file("build/docs/asciidoc")
-    into file("src/main/resources/static/docs")
-}
-
-build {
-    dependsOn copyDocument
 }

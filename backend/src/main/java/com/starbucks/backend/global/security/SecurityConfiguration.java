@@ -37,6 +37,8 @@ public class SecurityConfiguration {
                     authorizeRequest
                             .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                             .requestMatchers("/api/v1/auth/**").permitAll()
+                            .requestMatchers("/api/v1/docs").permitAll()
+                            .requestMatchers("http://localhost:63342/backend").permitAll()
                             .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                             .anyRequest().authenticated()
                 )
