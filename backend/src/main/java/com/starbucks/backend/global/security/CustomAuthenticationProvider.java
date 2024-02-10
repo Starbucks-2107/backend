@@ -2,6 +2,7 @@ package com.starbucks.backend.global.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,8 +21,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         final CustomUserDetails userDetails;
 
         userDetails = (CustomUserDetails) customUserDetailsService.loadUserByUsername(email);
-        bCryptPasswordEncoder.matches(password, userDetails.getPassword());
-
+        boolean isMatched = bCryptPasswordEncoder.matches(password, userDetails.getPassword());
+        if (!isMatched) {
+            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+        }
         return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
     }
 
