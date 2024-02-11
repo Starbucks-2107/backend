@@ -21,8 +21,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
 
         if (requestURI.startsWith("/api/v1/auth") ||
-                requestURI.startsWith("/api/v1/docs") ||
-                requestURI.startsWith("http://localhost:63342/backend")
+                requestURI.startsWith("/api/v1/docs")
         ) {
             filterChain.doFilter(request, response);
             return;
