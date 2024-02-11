@@ -46,5 +46,9 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    @Pattern(regexp = "^[0-9]+$")
+    @Column(length = 6)
+    private String birthday;
+
     private LocalDateTime joinedAt;
 }
