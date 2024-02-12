@@ -1,7 +1,7 @@
 package com.starbucks.backend.global.sms;
 
 import com.starbucks.backend.global.jwt.util.RedisUtil;
-import jakarta.persistence.EntityExistsException;
+import com.starbucks.backend.global.sms.dto.SMSMessageDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;

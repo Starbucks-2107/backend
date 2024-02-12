@@ -1,4 +1,4 @@
-package com.starbucks.backend.global.sms;
+package com.starbucks.backend.global.sms.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SMSVerificationRequest {
+public class SMSVerificationDTO {
     private String username;
     private String phoneNumber;
     private String verificationCode;

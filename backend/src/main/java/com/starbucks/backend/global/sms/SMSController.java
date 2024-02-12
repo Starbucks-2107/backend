@@ -1,5 +1,7 @@
 package com.starbucks.backend.global.sms;
 
+import com.starbucks.backend.global.sms.dto.SMSMessageDTO;
+import com.starbucks.backend.global.sms.dto.SMSVerificationDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +23,10 @@ public class SMSController {
     }
 
     @PostMapping(value = "/check")
-    public ResponseEntity<?> checkUserUsingVerificationCode(@RequestBody SMSVerificationRequest smsVerificationRequest) throws Exception {
-        smsMessageService.checkUserUsingVerificationCode(smsVerificationRequest.getPhoneNumber()
-                , smsVerificationRequest.getVerificationCode());
+    public ResponseEntity<?> checkUserUsingVerificationCode(@RequestBody SMSVerificationDTO smsVerificationDTO) throws Exception {
+        smsMessageService.checkUserUsingVerificationCode(smsVerificationDTO.getPhoneNumber()
+                , smsVerificationDTO.getVerificationCode());
 
-        return ResponseEntity.ok(smsVerificationRequest);
+        return ResponseEntity.ok(smsVerificationDTO);
     }
 }

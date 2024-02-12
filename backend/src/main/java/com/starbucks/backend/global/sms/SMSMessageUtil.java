@@ -3,6 +3,7 @@ package com.starbucks.backend.global.sms;
 import com.starbucks.backend.domain.user.entity.User;
 import com.starbucks.backend.domain.user.repository.UserRepository;
 import com.starbucks.backend.global.jwt.util.RedisUtil;
+import com.starbucks.backend.global.sms.dto.SMSMessageDTO;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
@@ -60,7 +61,7 @@ public class SMSMessageUtil {
         Message message = new Message();
         message.setFrom(sender);
         message.setTo(sendTo);
-        message.setText("[스타벅스] 인증번호: " + verificationCode);
+        message.setText("[스타벅스] 인증번호는 " + verificationCode + " 입니다. 정확히 입력해주세요.");
 
         SingleMessageSentResponse response = this.messageService
                 .sendOne(new SingleMessageSendingRequest(message));
@@ -74,7 +75,7 @@ public class SMSMessageUtil {
 
     public String generateVerificationCode() {
         Random random = new Random();
-        int randomNumber = 1000 + random.nextInt(9000);
+        int randomNumber = 100000 + random.nextInt(900000);
 
         return String.valueOf(randomNumber);
     }
