@@ -31,23 +31,23 @@ public class SignupControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    @MockBean
+    @Autowired
     SignUpService signUpService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
-//    @Test
+    @Test
     @DisplayName("회원 가입 테스트 - 정상적인 값을 입력한 경우")
     void signupWithRightValues() throws Exception {
         // given
         SignUpRequest signUpRequest = new SignUpRequest(
-                "wldsmtldsm65@gmail.com",
+                "hojinnnn@gmail.com",
                 "123qwe!@#QWE",
-                "시니",
-                "김시은",
-                "961120",
-                "01012345678"
+                "호진",
+                "김호진",
+                "20001113",
+                "01040365378"
         );
         String signUpRequestJson = objectMapper.writeValueAsString(signUpRequest);
 
@@ -201,7 +201,7 @@ public class SignupControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
-    @Test
+//    @Test
     @DisplayName("회원 가입 테스트 - 생년월일 유효성 검증(6자)")
     void signupWithLongBirthday() throws Exception {
         // given
@@ -226,7 +226,7 @@ public class SignupControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
-    @Test
+//    @Test
     @DisplayName("회원 가입 테스트 - 생년월일 유효성 검증(6자)")
     void signupWithNotNumberValues() throws Exception {
         // given

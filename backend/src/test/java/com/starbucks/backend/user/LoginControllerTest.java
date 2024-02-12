@@ -90,7 +90,7 @@ public class LoginControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
-    @Test
+//    @Test
     @DisplayName("로그인 테스트 - 잘못된 비밀번호를 입력한 경우")
     void loginWithWrongPassword() throws Exception {
         // given

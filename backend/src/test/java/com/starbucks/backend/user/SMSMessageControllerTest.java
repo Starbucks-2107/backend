@@ -2,9 +2,9 @@ package com.starbucks.backend.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.starbucks.backend.docs.ApiDocumentUtils;
-import com.starbucks.backend.global.sms.SMSMessageDTO;
+import com.starbucks.backend.global.sms.dto.SMSMessageDTO;
 import com.starbucks.backend.global.sms.SMSMessageService;
-import com.starbucks.backend.global.sms.SMSVerificationRequest;
+import com.starbucks.backend.global.sms.dto.SMSVerificationDTO;
 import jakarta.persistence.EntityExistsException;
 import org.apache.coyote.BadRequestException;
 import org.junit.jupiter.api.DisplayName;
@@ -95,9 +95,9 @@ public class SMSMessageControllerTest {
     @DisplayName("인증번호 확인 테스트 - 인증번호를 알맞게 입력한 경우")
     void verificationWithRightCode() throws Exception {
         //given
-        SMSVerificationRequest smsVerificationRequest =
-                new SMSVerificationRequest("김시은", "01065535378", "6960");
-        String smsVerificationRequestJson = objectMapper.writeValueAsString(smsVerificationRequest);
+        SMSVerificationDTO smsVerificationDTO =
+                new SMSVerificationDTO("김시은", "01065535378", "6960");
+        String smsVerificationRequestJson = objectMapper.writeValueAsString(smsVerificationDTO);
 
         //then
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/auth/sms/check")
@@ -121,16 +121,16 @@ public class SMSMessageControllerTest {
     @DisplayName("인증번호 확인 테스트 - 인증번호를 잘못 입력한 경우")
     void verificationWithWrongCode() throws Exception {
         //given
-        SMSVerificationRequest smsVerificationRequest =
-                new SMSVerificationRequest("김시은", "01065535378", "6961");
-        String smsVerificationRequestJson = objectMapper.writeValueAsString(smsVerificationRequest);
+        SMSVerificationDTO smsVerificationDTO =
+                new SMSVerificationDTO("김시은", "01065535378", "6961");
+        String smsVerificationRequestJson = objectMapper.writeValueAsString(smsVerificationDTO);
 
         // when
         Mockito.doThrow(new BadRequestException())
                 .when(smsMessageService)
                 .checkUserUsingVerificationCode(
-                        smsVerificationRequest.getPhoneNumber(),
-                        smsVerificationRequest.getVerificationCode());
+                        smsVerificationDTO.getPhoneNumber(),
+                        smsVerificationDTO.getVerificationCode());
 
         //then
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/auth/sms/check")
