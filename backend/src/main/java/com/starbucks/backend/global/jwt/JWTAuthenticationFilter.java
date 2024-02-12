@@ -20,7 +20,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             , @NotNull FilterChain filterChain) throws ServletException, IOException {
         String requestURI = request.getRequestURI();
 
-        if (requestURI.startsWith("/api/v1/auth") ||
+        if (requestURI.equals("/api/v1/auth/signup") ||
+                requestURI.equals("/api/v1/auth/login") ||
+            requestURI.startsWith("/api/v1/auth/sms") ||
+                requestURI.startsWith("/api/v1/auth/token") ||
                 requestURI.startsWith("/api/v1/docs")
         ) {
             filterChain.doFilter(request, response);

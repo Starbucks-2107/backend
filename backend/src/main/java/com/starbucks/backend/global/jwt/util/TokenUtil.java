@@ -11,12 +11,14 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -96,7 +98,10 @@ public class TokenUtil implements InitializingBean {
         accessToken = accessToken.substring(7);
 
         Long userId = getUserIdFromToken(accessToken);
-        User user = userRepository.findById(userId).get();
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()){
+            throw new UsernameNotFoundException("해당 유저를 찾을 수 없습니다.");
+        }
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(user, accessToken, new ArrayList<>());
