@@ -34,6 +34,8 @@ public class SignUpService {
                 .username(request.getUsername())
                 .phoneNumber(request.getPhoneNumber())
                 .nickname(request.getNickname())
+                .birthday(request.getBirthday())
+                .isGotBirthdayCoupon("N")
                 .membership(Membership.NONE)
                 .role(Role.USER)
                 .joinedAt(LocalDateTime.now())
