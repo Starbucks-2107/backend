@@ -1,15 +1,23 @@
 package com.starbucks.backend.domain.user.entity;
 
+import com.starbucks.backend.domain.user.dto.ChangeUserInfoRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class User {
     @Id
@@ -19,12 +27,19 @@ public class User {
     @Email
     private String email;
 
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$")
-    // 비밀번호는 최소 8자 이상 이며, 숫자, 대문자, 소문자를 적어도 하나씩 포함 해야 합니다.
-    // TODO: 예외 처리 알아보기
     private String password;
 
-    // TODO: 닉네임 정책 알아보기
+    @NotNull
+    @Column(unique = true)
+    private String username;
+
+    @NotNull
+    @Column(length = 11, unique = true)
+    private String phoneNumber;
+
+    @NotNull
+    @Pattern(regexp = "^[가-힣]+$")
+    @Size(min = 1, max = 6)
     private String nickname;
 
     @Enumerated(value = EnumType.STRING)
@@ -33,5 +48,45 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    @Pattern(regexp = "^[0-9]+$")
+    @Column(length = 8)
+    private String birthday;
+
+    @Column(length = 1)
+    private String isGotBirthdayCoupon;
+
     private LocalDateTime joinedAt;
+
+
+    // ==============================================================================
+
+    public void updateUserInfo(ChangeUserInfoRequest request) {
+        Optional.ofNullable(request.getNewPhoneNumber()).ifPresent(this::setPhoneNumber);
+        Optional.ofNullable(request.getNewNickname()).ifPresent(this::setNickname);
+        Optional.ofNullable(request.getNewUsername()).ifPresent(this::setUsername);
+        Optional.ofNullable(request.getNewBirthday()).ifPresent(this::setBirthday);
+    }
+
+    private void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    private void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    private void setUsername(String username) {
+        this.username = username;
+    }
+
+    private void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+
+    // ------------------------------------------------------------------------------
+
+    public void updatePassword(String password) {
+        this.password = password;
+    }
 }

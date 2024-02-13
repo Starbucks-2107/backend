@@ -19,5 +19,12 @@ spring:
       port: 6379
       host: 127.0.0.1
 
-  secret:
-    key: ${JWT_SECRET_KEY}
+secret:
+  key: ${JWT_SECRET_KEY}
+
+coolsms:
+  api:
+    key: ${COOLSMS_KEY}
+    secret: ${COOLSMS_SECRET_KEY}
+
+sendNumber: ${SEND_NUMBER}
