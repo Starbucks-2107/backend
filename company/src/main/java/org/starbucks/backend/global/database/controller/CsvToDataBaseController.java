@@ -1,11 +1,11 @@
-package org.starbucks.backend.global.temp.controller;
+package org.starbucks.backend.global.database.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.starbucks.backend.global.temp.service.CsvToDataBaseService;
+import org.starbucks.backend.global.database.service.CsvToDataBaseService;
 
 @RestController()
 @RequestMapping(value = "/api/v1/data")

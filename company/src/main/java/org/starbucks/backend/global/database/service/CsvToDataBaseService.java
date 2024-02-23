@@ -1,4 +1,4 @@
-package org.starbucks.backend.global.temp.service;
+package org.starbucks.backend.global.database.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
